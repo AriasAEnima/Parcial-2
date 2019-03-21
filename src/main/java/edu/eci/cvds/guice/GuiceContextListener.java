@@ -11,8 +11,10 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import edu.eci.cvds.persistence.DecanaturaDAO;
+import edu.eci.cvds.persistence.MateriaDAO;
 import edu.eci.cvds.persistence.ProgramaDAO;
 import edu.eci.cvds.persistence.mybatisimpl.MyBatisDecanaturaDAO;
+import edu.eci.cvds.persistence.mybatisimpl.MyBatisMateriaDAO;
 import edu.eci.cvds.persistence.mybatisimpl.MyBatisProgramaDAO;
 import edu.eci.cvds.services.DecanaturaServices;
 import edu.eci.cvds.services.impl.DecanaturaServicesImpl;
@@ -40,6 +42,7 @@ public class GuiceContextListener implements ServletContextListener {
                 bind(DecanaturaDAO.class).to(MyBatisDecanaturaDAO.class);
 				// Programa
                 bind(ProgramaDAO.class).to(MyBatisProgramaDAO.class);
+                bind(MateriaDAO.class).to(MyBatisMateriaDAO.class);
 			}
 		}
 

@@ -9,8 +9,11 @@ import org.junit.Test;
 import com.google.inject.Inject;
 
 import edu.eci.cvds.entities.Decanatura;
+import edu.eci.cvds.entities.Programa;
 import edu.eci.cvds.services.DecanaturaServices;
 import edu.eci.cvds.services.ServicesException;
+import static edu.eci.cvds.tests.Generators.materias;
+import static org.quicktheories.generators.SourceDSL.integers;
 
 /**
  * Clase de prueba para {@link DecanaturaServices}
@@ -27,9 +30,9 @@ public class DecanaturaServicesTest extends TestBase {
 				decanaturaServices.crearDecanatura(decanatura);
 
 				for (Decanatura dec : decanaturaServices.listarDecanaturas()) {
-					if (decanatura.getNombre().equals(dec.getNombre())) {
-						return true;
-					}
+                                    if (decanatura.getNombre().equals(dec.getNombre())) {
+                                            return true;
+                                    }
 				}
 
 				return false;
@@ -40,4 +43,31 @@ public class DecanaturaServicesTest extends TestBase {
 
 		});
 	}
+        
+    @Test
+    public void buscarMateriasPorProgramaTest(){
+            qt().forAll(materias()).check((materia) -> {
+			try {
+				decanaturaServices.crearMateria(materia);		
+				return true;
+			} catch (ServicesException ex) {
+				System.out.println(ex.getMessage());
+				return false;
+			}
+
+		});           
+             qt().forAll(integers().between(1,7)).check((proid) -> {
+			try {
+				decanaturaServices.buscarMateriasPorPrograma(proid);
+				return true;
+			} catch (ServicesException ex) {
+				System.out.println(ex.getMessage());
+				return false;
+			}
+
+		});
+            
+            
+    }
+    
 }

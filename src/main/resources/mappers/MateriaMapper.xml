@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.eci.cvds.persistence.mybatisimpl.mappers.MateriaMapper">
+    <select id="consultarMateriaPorPrograma" parameterType="map" resultMap="MateriaResult">
+		select MATERIA.mnemonico AS nmo, 
+        MATERIA.nombre as mno , MATERIA.programa_id as mpid, 
+        MATERIA.nucleo as nma, MATERIA.creditos as mcr, MATERIA.semestre as ms
+        from PROGRAMA, MATERIA 
+        WHERE PROGRAMA.id=#{pro} AND MATERIA.programa_id=PROGRAMA.id
+	</select>
+    
+	
+    <resultMap type='Materia' id='MateriaResult'>
+        <id property='mnemonico' column='nmo' />
+        <result property='semestre' column='ms' />
+         <result property='nombre' column='mno' />
+          <result property='programaId' column='mpid' />
+           <result property='nucleo' column='nma' />
+            <result property='creditos' column='mcr' />       
+    </resultMap>      
+
+     <insert id="insertarMateria" parameterType="map">
+        insert into MATERIA(mnemonico,nombre, programa_id, nucleo, creditos,semestre) 
+         values (#{mat.mnemonico}, #{mat.nombre},#{mat.programaId}, #{mat.nucleo},#{mat.creditos},#{mat.semestre})
+    </insert>
+    
+</mapper>
